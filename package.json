@@ -1,0 +1,19 @@
+{
+  "name": "wyscout-loader",
+  "version": "0.0.1",
+  "description": "Automatically loads data from wyscout into a database.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdheff/wyscout-loader.git"
+  },
+  "author": "Tommy Heffernan <tdheff@pm.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tdheff/wyscout-loader/issues"
+  },
+  "homepage": "https://github.com/tdheff/wyscout-loader#readme"
+}
