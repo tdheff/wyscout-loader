@@ -56,92 +56,92 @@ async function execute() {
     const matches = await getSeasonMatches("188268");
     if (matches.matches) {
 
-        // console.info("Inserting matches...")
-        // for (const match of matches.matches) {
-        //     const matchToCreate = {
-        //         wyId: match.matchId || -1,
-        //         hasDataAvailable: false,
-        //         duration: null,
-        //         venue: null,
-        //         winner: null,
-        //         // competitionId: match.competitionId ?? null,
-        //         competitionId: null,
-        //         // seasonId: match.seasonId ?? null,
-        //         seasonId: null,
-        //         gameweek: match.gameweek ?? null,
-        //         // roundId: match.roundId ?? null,
-        //         roundId: null,
-        //         label: match.label ?? null,
-        //         status: match.status?.toString() ?? null,
-        //         date: match.date ? new Date(match.date) : null,
-        //         dateutc: match.dateutc ? new Date(match.dateutc) : null,
-        //     }
-        //     await prisma.match.upsert({ where: { wyId: matchToCreate.wyId }, update: matchToCreate, create: matchToCreate })
-        // }
-        // console.info("Done.")
+        console.info("Inserting matches...")
+        for (const match of matches.matches) {
+            const matchToCreate = {
+                wyId: match.matchId || -1,
+                hasDataAvailable: false,
+                duration: null,
+                venue: null,
+                winner: null,
+                // competitionId: match.competitionId ?? null,
+                competitionId: null,
+                // seasonId: match.seasonId ?? null,
+                seasonId: null,
+                gameweek: match.gameweek ?? null,
+                // roundId: match.roundId ?? null,
+                roundId: null,
+                label: match.label ?? null,
+                status: match.status?.toString() ?? null,
+                date: match.date ? new Date(match.date) : null,
+                dateutc: match.dateutc ? new Date(match.dateutc) : null,
+            }
+            await prisma.match.upsert({ where: { wyId: matchToCreate.wyId }, update: matchToCreate, create: matchToCreate })
+        }
+        console.info("Done.")
 
-        // // Get all teams
-        // console.info("Fetching teams...")
-        // const teams = await getSeasonTeams("188268");
-        // console.info("Done.")
+        // Get all teams
+        console.info("Fetching teams...")
+        const teams = await getSeasonTeams("188268");
+        console.info("Done.")
 
-        // console.info("Inserting teams...")
-        // for (const team of teams.teams || []) {
-        //     const teamToCreate: Team = {
-        //         wyId: team.wyId || -1,
-        //         areaId: team.area?.id || null,
-        //         category: team.category?.toString() || null,
-        //         city: team.city || null,
-        //         gender: team.gender?.toString() || null,
-        //         name: team.name || null,
-        //         officialName: team.officialName || null,
-        //         type: team.type?.toString() || null
-        //     }
-        //     await prisma.team.upsert({ where: { wyId: teamToCreate.wyId }, update: teamToCreate, create: teamToCreate })
-        // }
-        // console.info("Done.")
+        console.info("Inserting teams...")
+        for (const team of teams.teams || []) {
+            const teamToCreate: Team = {
+                wyId: team.wyId || -1,
+                areaId: team.area?.id || null,
+                category: team.category?.toString() || null,
+                city: team.city || null,
+                gender: team.gender?.toString() || null,
+                name: team.name || null,
+                officialName: team.officialName || null,
+                type: team.type?.toString() || null
+            }
+            await prisma.team.upsert({ where: { wyId: teamToCreate.wyId }, update: teamToCreate, create: teamToCreate })
+        }
+        console.info("Done.")
 
-        // // Get all players
-        // let page = 0;
-        // while (true) {
-        //     console.info(`Gathering players page: ${page}`)
-        //     console.info("Fetching players...")
-        //     const players = await getSeasonPlayers("188268", page);
-        //     console.info("Done.")
+        // Get all players
+        let page = 0;
+        while (true) {
+            console.info(`Gathering players page: ${page}`)
+            console.info("Fetching players...")
+            const players = await getSeasonPlayers("188268", page);
+            console.info("Done.")
 
-        //     console.info("Inserting players...")
-        //     for (const player of players.players ?? []) {
-        //         const playerToCreate: Player = {
-        //             wyId: player.wyId || -1,
-        //             areaId: player.passportArea?.id || null,
-        //             birthDate: player.birthDate || null,
-        //             currentNationalTeamId: player.currentNationalTeamId || null,
-        //             currentTeamId: player.currentTeamId || null,
-        //             firstName: player.firstName || null,
-        //             middleName: player.middleName || null,
-        //             lastName: player.lastName || null,
-        //             foot: player.foot || null,
-        //             gender: player.gender || null,
-        //             height: player.height || null,
-        //             passportAreaName: player.passportArea?.name || null,
-        //             roleName: player.role?.name || null,
-        //             roleCode2: player.role?.code2 || null,
-        //             roleCode3: player.role?.code3 || null,
-        //             status: player.status || null,
-        //             weight: player.weight || null
-        //         }
-        //         await prisma.player.upsert({ where: { wyId: playerToCreate.wyId }, update: playerToCreate, create: playerToCreate })
-        //     }
-        //     console.info("Done.")
+            console.info("Inserting players...")
+            for (const player of players.players ?? []) {
+                const playerToCreate: Player = {
+                    wyId: player.wyId || -1,
+                    areaId: player.passportArea?.id || null,
+                    birthDate: player.birthDate || null,
+                    currentNationalTeamId: player.currentNationalTeamId || null,
+                    currentTeamId: player.currentTeamId || null,
+                    firstName: player.firstName || null,
+                    middleName: player.middleName || null,
+                    lastName: player.lastName || null,
+                    foot: player.foot || null,
+                    gender: player.gender || null,
+                    height: player.height || null,
+                    passportAreaName: player.passportArea?.name || null,
+                    roleName: player.role?.name || null,
+                    roleCode2: player.role?.code2 || null,
+                    roleCode3: player.role?.code3 || null,
+                    status: player.status || null,
+                    weight: player.weight || null
+                }
+                await prisma.player.upsert({ where: { wyId: playerToCreate.wyId }, update: playerToCreate, create: playerToCreate })
+            }
+            console.info("Done.")
 
-        //     console.log(players.meta)
+            console.log(players.meta)
 
-        //     if (players.meta?.page_count == players.meta?.page_current) {
-        //         console.info(`Fetched ${players.meta?.page_current}/${players.meta?.page_count} pages.`)
-        //         break;
-        //     }
-        //     page++;
-        // }
+            if (players.meta?.page_count == players.meta?.page_current) {
+                console.info(`Fetched ${players.meta?.page_current}/${players.meta?.page_count} pages.`)
+                break;
+            }
+            page++;
+        }
 
         let currentMatchIx = 1;
         for (const match of matches.matches) {
