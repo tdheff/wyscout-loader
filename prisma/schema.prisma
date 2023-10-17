@@ -1,0 +1,228 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model Area {
+  id          Int           @id
+  alpha2code  String
+  alpha3code  String
+  name        String
+  Coach       Coach[]
+  Competition Competition[]
+}
+
+model Coach {
+  wyId          Int             @id
+  birthArea     Area            @relation(fields: [birthAreaId], references: [id])
+  birthDate     DateTime
+  birthAreaId   Int
+  // todo: currentTeam Team
+  firstName     String
+  middleName    String
+  lastName      String
+  gender        String
+  imageDataUrl  String
+  // passportArea   Area     @relation(fields: [passportAreaId], references: [id])
+  // passportAreaId Int
+  shortName     String
+  status        String
+  MatchTeamData MatchTeamData[]
+}
+
+model Competition {
+  wyId          Int      @id
+  area          Area?    @relation(fields: [areaId], references: [id])
+  areaId        Int?
+  category      String?
+  divisionLevel Int?
+  format        String?
+  gender        String?
+  name          String?
+  type          String?
+  Match         Match[]
+  Season        Season[]
+  Round         Round[]
+}
+
+model Match {
+  wyId             Int             @id
+  competition      Competition?    @relation(fields: [competitionId], references: [wyId])
+  competitionId    Int?
+  date             DateTime?
+  dateutc          DateTime?
+  duration         String?
+  gameweek         Int?
+  hasDataAvailable Boolean?
+  label            String?
+  // referees
+  round            Round?          @relation(fields: [roundId], references: [wyId])
+  roundId          Int?
+  status           String?
+  // teamsData
+  venue            String?
+  winner           Int?
+  season           Season?         @relation(fields: [seasonId], references: [wyId])
+  seasonId         Int?
+  MatchTeamData    MatchTeamData[]
+  MatchEvent       MatchEvent[]
+}
+
+model MatchTeamData {
+  id      Int    @id @default(autoincrement())
+  coach   Coach  @relation(fields: [coachId], references: [wyId])
+  coachId Int
+  score   Int
+  scoreHT Int
+  scoreET Int
+  scoreP  Int
+  side    String
+  team    Team   @relation(fields: [teamId], references: [wyId])
+  teamId  Int
+  match   Match  @relation(fields: [matchId], references: [wyId])
+  matchId Int
+}
+
+model Player {
+  wyId                  Int     @id
+  areaId                Int?
+  birthDate             String?
+  currentNationalTeamId Int?
+  currentTeamId         Int?
+  firstName             String?
+  middleName            String?
+  lastName              String?
+  foot                  String?
+  gender                String?
+  height                Int?
+  passportAreaName      String?
+  // passportArea   Area     @relation(fields: [passportAreaId], references: [id])
+  // passportAreaId Int
+  roleName              String?
+  roleCode2             String?
+  roleCode3             String?
+  status                String?
+  weight                Int?
+}
+
+model Team {
+  wyId          Int             @id
+  areaId        Int?
+  category      String?
+  city          String?
+  gender        String?
+  // imageDataUrl  String
+  name          String?
+  officialName  String?
+  type          String?
+  MatchTeamData MatchTeamData[]
+}
+
+model Season {
+  wyId          Int          @id
+  active        Boolean?
+  competition   Competition? @relation(fields: [competitionId], references: [wyId])
+  competitionId Int?
+  startDate     DateTime?
+  endDate       DateTime?
+  name          String?
+  Round         Round[]
+  Match         Match[]
+}
+
+model Round {
+  wyId          Int         @id
+  competition   Competition @relation(fields: [competitionId], references: [wyId])
+  competitionId Int
+  season        Season      @relation(fields: [seasonId], references: [wyId])
+  seasonId      Int
+  startDate     DateTime
+  endDate       DateTime
+  name          String
+  type          String
+  Match         Match[]
+}
+
+model MatchEvent {
+  id             Int     @id
+  match          Match   @relation(fields: [matchId], references: [wyId])
+  matchId        Int
+  matchPeriod    String?
+  matchTimestamp String?
+  minute         Int?
+  second         Int?
+  playerId       Int?
+  playerName     String?
+  playerPosition String?
+  relatedEventId Int?
+  teamId         Int?
+  teamName       String?
+  teamFormation  String?
+  typePrimary    String?
+  typeSecondary  String?
+  videoTimestamp String?
+
+  // aerialDuel
+  aerialDuelDescription      String?
+  aerialDuelFirstTouch       Boolean?
+  aerialDuelHeight           Int?
+  aerialDuelOpoonentHeight   Int?
+  aerialDuelOpponentId       Int?
+  aerialDuelOpponentName     String?
+  aerialDuelOpponentPosition String?
+  aerialDuelRelatedDuelId    Int?
+
+  // carry
+  carryEndLocationX Int?
+  carryEndLocationY Int?
+  carryProgression  Float?
+
+  // groundDuel
+  groundDuelduelType            String?
+  groundDuelKeptPossession      Boolean?
+  groundDuelOpponentId          Int?
+  groundDuelOpponentName        String?
+  groundDuelOpponentPosition    String?
+  groundDuelProgressedWithBall  Boolean?
+  groundDuelRecoveredPossession Boolean?
+  groundDuelRelatedDuelId       Int?
+  groundDuelSide                String?
+  groundDuelStoppedProgress     Boolean?
+  groundDueltakeOn              Boolean?
+
+  // pass
+  passAccurate          Boolean?
+  passAngle             Int?
+  passEndLocationX      Int?
+  passEndLocationY      Int?
+  passLength            Float?
+  passRecipientId       Int?
+  passRecipientName     String?
+  passRecipientPosition String?
+
+  //
+  possessionAttackFlank          String?
+  possessionAttackWithGoal       Boolean?
+  possessionAttackWithShot       Boolean?
+  possessionAttackWithShotOnGoal Boolean?
+  possessionAttackXG             Float?
+  possessionDuration             String?
+  possessionEndLocationX         Int?
+  possessionEndLocationY         Int?
+  possessionStartLocationX       Int?
+  possessionStartLocationY       Int?
+  possessionEventIndex           Int?
+  possessionEventsNumber         Int?
+  possessionTeamFormation        String?
+  possessionTeamId               Int?
+  possessionTeamName             String?
+  // note, this is an array in the actual thing. can be supported if we switch to pg
+  possessionTypes                String?
+}
