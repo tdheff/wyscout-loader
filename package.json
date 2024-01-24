@@ -23,6 +23,7 @@
   "homepage": "https://github.com/tdheff/wyscout-loader#readme",
   "dependencies": {
     "@prisma/client": "^5.3.1",
+    "dotenv": "^16.3.1",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.3.2",
     "openapi-ts-sdk-builder": "^6.0.0"

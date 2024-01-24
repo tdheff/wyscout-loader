@@ -73,25 +73,38 @@ model Match {
   seasonId         Int?
   MatchTeamData    MatchTeamData[]
   MatchEvent       MatchEvent[]
+  Substitution     Substitution[]
+}
+
+model Substitution {
+  id         String  @id
+  match      Match?  @relation(fields: [matchWyId], references: [wyId])
+  matchWyId  Int?
+  player     Player? @relation(fields: [playerWyId], references: [wyId])
+  playerWyId Int?
+  direction  String?
+  second     Int?
+  period     String?
 }
 
 model MatchTeamData {
-  id      Int    @id @default(autoincrement())
-  coach   Coach  @relation(fields: [coachId], references: [wyId])
-  coachId Int
-  score   Int
-  scoreHT Int
-  scoreET Int
-  scoreP  Int
-  side    String
-  team    Team   @relation(fields: [teamId], references: [wyId])
-  teamId  Int
-  match   Match  @relation(fields: [matchId], references: [wyId])
-  matchId Int
+  id        String  @id
+  coach     Coach?  @relation(fields: [coachId], references: [wyId])
+  coachId   Int?
+  score     Int?
+  scoreHT   Int?
+  scoreET   Int?
+  scoreP    Int?
+  side      String?
+  team      Team?   @relation(fields: [teamId], references: [wyId])
+  teamId    Int?
+  match     Match?  @relation(fields: [matchId], references: [wyId])
+  matchId   Int?
+  formation Json?
 }
 
 model Player {
-  wyId                  Int     @id
+  wyId                  Int            @id
   areaId                Int?
   birthDate             String?
   currentNationalTeamId Int?
@@ -110,6 +123,7 @@ model Player {
   roleCode3             String?
   status                String?
   weight                Int?
+  Substitution          Substitution[]
 }
 
 model Team {
@@ -207,7 +221,7 @@ model MatchEvent {
   passRecipientName     String?
   passRecipientPosition String?
 
-  //
+  // possession
   possessionAttackFlank          String?
   possessionAttackWithGoal       Boolean?
   possessionAttackWithShot       Boolean?
@@ -224,5 +238,27 @@ model MatchEvent {
   possessionTeamId               Int?
   possessionTeamName             String?
   // note, this is an array in the actual thing. can be supported if we switch to pg
-  possessionTypes                String?
+  possessionTypes                String[]
+
+  // shot
+  shotBodyPart             String?
+  shotIsGoal               Boolean?
+  shotOnTarget             Boolean?
+  shotGoalZone             String?
+  shotXG                   Float?
+  shotPostShotXG           Float?
+  shotGoalkeeperActionId   Int?
+  shotGoalkeeperId         Int?
+  shotGoalkeeperName       String?
+  shotGoalkeeperReflexSave Boolean?
+
+  // infraction
+  infractionYellowCard       Boolean?
+  infractionRedCard          Boolean?
+  infractionType             String?
+  infractionOpponentId       Int?
+  infractionOpponentName     String?
+  infractionOpponentPosition String?
+
+  //
 }

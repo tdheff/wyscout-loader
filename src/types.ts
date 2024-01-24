@@ -1374,7 +1374,8 @@ export interface Match {
      * @type {MatchTeamsData}
      * @memberof Match
      */
-    teamsData?: MatchTeamsData;
+    // teamsData?: MatchTeamsData;
+    teamsData?: { [teamId: string]: MatchTeamData };
     /**
      * 
      * @type {string}
@@ -5881,12 +5882,13 @@ export interface ShotDetails {
  * @interface SubstitutionFetch
  */
 export interface SubstitutionFetch {
-    /**
-     * 
-     * @type {TheSubstitutionsRelatedToTheTeamWithIDTeamId}
-     * @memberof SubstitutionFetch
-     */
-    teamId?: TheSubstitutionsRelatedToTheTeamWithIDTeamId;
+    // /**
+    //  * 
+    //  * @type {TheSubstitutionsRelatedToTheTeamWithIDTeamId}
+    //  * @memberof SubstitutionFetch
+    //  */
+    // teamId?: TheSubstitutionsRelatedToTheTeamWithIDTeamId;
+    [teamId: string]: TheSubstitutionsRelatedToTheTeamWithIDTeamId
 }
 /**
  * Data about the given team
@@ -9051,7 +9053,7 @@ export interface TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart
      * @type {Array<TheEntranceOfAPlayerAsASubstitute>}
      * @memberof TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart
      */
-    _in?: Array<TheEntranceOfAPlayerAsASubstitute>;
+    in?: Array<TheEntranceOfAPlayerAsASubstitute>;
     /**
      * 
      * @type {Array<TheExitOfAPlayerFromTheFieldRedCardsIncluded>}
@@ -9065,12 +9067,13 @@ export interface TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart
  * @interface TheSubstitutionsRelatedToMatchPeriodMatchPeriod
  */
 export interface TheSubstitutionsRelatedToMatchPeriodMatchPeriod {
-    /**
-     * 
-     * @type {TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart}
-     * @memberof TheSubstitutionsRelatedToMatchPeriodMatchPeriod
-     */
-    startSec?: TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart;
+    // /**
+    //  * 
+    //  * @type {TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart}
+    //  * @memberof TheSubstitutionsRelatedToMatchPeriodMatchPeriod
+    //  */
+    // startSec?: TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart;
+    [secondsFromStart: string]: TheSubstitutionThatHappenedAtStartSecSecondsElapsedFromTheStart
 }
 /**
  * 
@@ -9078,12 +9081,13 @@ export interface TheSubstitutionsRelatedToMatchPeriodMatchPeriod {
  * @interface TheSubstitutionsRelatedToTheTeamWithIDTeamId
  */
 export interface TheSubstitutionsRelatedToTheTeamWithIDTeamId {
-    /**
-     * 
-     * @type {TheSubstitutionsRelatedToMatchPeriodMatchPeriod}
-     * @memberof TheSubstitutionsRelatedToTheTeamWithIDTeamId
-     */
-    matchPeriod?: TheSubstitutionsRelatedToMatchPeriodMatchPeriod;
+    // /**
+    //  * 
+    //  * @type {TheSubstitutionsRelatedToMatchPeriodMatchPeriod}
+    //  * @memberof TheSubstitutionsRelatedToTheTeamWithIDTeamId
+    //  */
+    // matchPeriod?: TheSubstitutionsRelatedToMatchPeriodMatchPeriod;
+    [period: string]: TheSubstitutionsRelatedToMatchPeriodMatchPeriod
 }
 /**
  * 
